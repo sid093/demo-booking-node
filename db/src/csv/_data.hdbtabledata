@@ -1,0 +1,40 @@
+{
+	"format_version": 1,
+	"imports": [{
+		"target_table": "APP_FLIGHT_AIRLINE",
+		"source_data": {
+			"data_type": "CSV",
+			"file_name": "airline.csv",
+			"has_header": true
+		},
+		"import_settings": {
+			"import_columns": [
+				"IATA", "NAME",	"COUNTRY"
+			]
+		}
+	}, {
+		"target_table": "APP_FLIGHT_AIRPORTS",
+		"source_data": {
+			"data_type": "CSV",
+			"file_name": "airport.csv",
+			"has_header": true
+		},
+		"import_settings": {
+			"import_columns": [
+				"IATA3", "NAME", "CITY", "COUNTRY", "ELEVATION", "LATITUDE", "LONGITUDE"
+			]
+		}
+	}, {
+		"target_table": "APP_FLIGHT_FLIGHTROUTES",
+		"source_data": {
+			"data_type": "CSV",
+			"file_name": "flightroutes.csv",
+			"has_header": true
+		},
+		"import_settings": {
+			"import_columns": [
+				"ID","DISTANCE","STARTINGAIRPORT_IATA3","DESTINATIONAIRPORT_IATA3","AIRLINE_IATA"
+			]
+		}
+	}]
+}
