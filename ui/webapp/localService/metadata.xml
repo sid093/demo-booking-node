@@ -1,0 +1,172 @@
+<?xml version="1.0" encoding="utf-8"?>
+<edmx:Edmx Version="4.0" xmlns:edmx="http://docs.oasis-open.org/odata/ns/edmx">
+	<edmx:Reference Uri="https://oasis-tcs.github.io/odata-vocabularies/vocabularies/Org.OData.Capabilities.V1.xml">
+		<edmx:Include Alias="Capabilities" Namespace="Org.OData.Capabilities.V1"/>
+	</edmx:Reference>
+	<edmx:Reference Uri="https://wiki.scn.sap.com/wiki/download/attachments/448470974/Common.xml?api=v2">
+		<edmx:Include Alias="Common" Namespace="com.sap.vocabularies.Common.v1"/>
+	</edmx:Reference>
+	<edmx:DataServices>
+		<Schema Namespace="AppService" xmlns="http://docs.oasis-open.org/odata/ns/edm">
+			<EntityContainer Name="EntityContainer">
+				<EntitySet Name="Airline" EntityType="AppService.Airline">
+					<NavigationPropertyBinding Path="Routes" Target="FlightRoutes"/>
+				</EntitySet>
+				<EntitySet Name="Airports" EntityType="AppService.Airports">
+					<NavigationPropertyBinding Path="Departures" Target="FlightRoutes"/>
+					<NavigationPropertyBinding Path="Arrivals" Target="FlightRoutes"/>
+				</EntitySet>
+				<EntitySet Name="Bookings" EntityType="AppService.Bookings">
+					<NavigationPropertyBinding Path="Route" Target="FlightRoutes"/>
+					<NavigationPropertyBinding Path="PaymentInfo" Target="PaymentInfo"/>
+				</EntitySet>
+				<EntitySet Name="FlightRoutes" EntityType="AppService.FlightRoutes">
+					<NavigationPropertyBinding Path="StartingAirport" Target="Airports"/>
+					<NavigationPropertyBinding Path="DestinationAirport" Target="Airports"/>
+					<NavigationPropertyBinding Path="Airline" Target="Airline"/>
+				</EntitySet>
+				<EntitySet Name="PaymentInfo" EntityType="AppService.PaymentInfo"/>
+			</EntityContainer>
+			<EntityType Name="Airline">
+				<Key>
+					<PropertyRef Name="IATA"/>
+				</Key>
+				<Property Name="IATA" Type="Edm.String" MaxLength="2" Nullable="false"/>
+				<Property Name="Name" Type="Edm.String" MaxLength="100"/>
+				<Property Name="Country" Type="Edm.String" MaxLength="50"/>
+				<NavigationProperty Name="Routes" Type="Collection(AppService.FlightRoutes)" Partner="Airline"/>
+			</EntityType>
+			<EntityType Name="Airports">
+				<Key>
+					<PropertyRef Name="IATA3"/>
+				</Key>
+				<Property Name="IATA3" Type="Edm.String" MaxLength="3" Nullable="false"/>
+				<Property Name="Name" Type="Edm.String" MaxLength="100"/>
+				<Property Name="City" Type="Edm.String" MaxLength="30"/>
+				<Property Name="Country" Type="Edm.String" MaxLength="50"/>
+				<Property Name="Elevation" Type="Edm.Int32"/>
+				<Property Name="Latitude" Type="Edm.Double"/>
+				<Property Name="Longitude" Type="Edm.Double"/>
+				<NavigationProperty Name="Departures" Type="Collection(AppService.FlightRoutes)" Partner="StartingAirport"/>
+				<NavigationProperty Name="Arrivals" Type="Collection(AppService.FlightRoutes)" Partner="DestinationAirport"/>
+			</EntityType>
+			<EntityType Name="Bookings">
+				<Key>
+					<PropertyRef Name="ID"/>
+				</Key>
+				<Property Name="ID" Type="Edm.Guid" Nullable="false"/>
+				<Property Name="createdAt" Type="Edm.DateTimeOffset"/>
+				<Property Name="updatedAt" Type="Edm.DateTimeOffset"/>
+				<Property Name="BookingNo" Type="Edm.String" MaxLength="25"/>
+				<NavigationProperty Name="Route" Type="AppService.FlightRoutes">
+					<ReferentialConstraint Property="Route_ID" ReferencedProperty="ID"/>
+				</NavigationProperty>
+				<Property Name="CustomerName" Type="Edm.String" MaxLength="50"/>
+				<Property Name="EmailAddress" Type="Edm.String" MaxLength="50"/>
+				<Property Name="DateOfTravel" Type="Edm.DateTimeOffset" Nullable="false"/>
+				<Property Name="Cost" Type="Edm.Decimal" Scale="2" Precision="10" Nullable="false"/>
+				<Property Name="NumberOfPassengers" Type="Edm.Int32"/>
+				<NavigationProperty Name="PaymentInfo" Type="AppService.PaymentInfo">
+					<ReferentialConstraint Property="PaymentInfo_CardNumber" ReferencedProperty="CardNumber"/>
+				</NavigationProperty>
+				<Property Name="Route_ID" Type="Edm.String" MaxLength="8"/>
+				<Property Name="PaymentInfo_CardNumber" Type="Edm.String" MaxLength="16"/>
+			</EntityType>
+			<EntityType Name="FlightRoutes">
+				<Key>
+					<PropertyRef Name="ID"/>
+				</Key>
+				<Property Name="ID" Type="Edm.String" MaxLength="8" Nullable="false"/>
+				<NavigationProperty Name="StartingAirport" Type="AppService.Airports" Nullable="false" Partner="Departures">
+					<ReferentialConstraint Property="StartingAirport_IATA3" ReferencedProperty="IATA3"/>
+				</NavigationProperty>
+				<NavigationProperty Name="DestinationAirport" Type="AppService.Airports" Nullable="false" Partner="Arrivals">
+					<ReferentialConstraint Property="DestinationAirport_IATA3" ReferencedProperty="IATA3"/>
+				</NavigationProperty>
+				<NavigationProperty Name="Airline" Type="AppService.Airline" Partner="Routes">
+					<ReferentialConstraint Property="Airline_IATA" ReferencedProperty="IATA"/>
+				</NavigationProperty>
+				<Property Name="Distance" Type="Edm.Int32"/>
+				<Property Name="StartingAirport_IATA3" Type="Edm.String" MaxLength="3" Nullable="false"/>
+				<Property Name="DestinationAirport_IATA3" Type="Edm.String" MaxLength="3" Nullable="false"/>
+				<Property Name="Airline_IATA" Type="Edm.String" MaxLength="2"/>
+			</EntityType>
+			<EntityType Name="PaymentInfo">
+				<Key>
+					<PropertyRef Name="CardNumber"/>
+				</Key>
+				<Property Name="CardNumber" Type="Edm.String" MaxLength="16" Nullable="false"/>
+				<Property Name="CardType" Type="Edm.String" MaxLength="15" Nullable="false"/>
+				<Property Name="CVV" Type="Edm.Int32" Nullable="false"/>
+				<Property Name="CardHolder" Type="Edm.String" MaxLength="30" Nullable="false"/>
+				<Property Name="CardExpiry" Type="Edm.DateTimeOffset" Nullable="false"/>
+			</EntityType>
+			<Annotations Target="AppService.EntityContainer/Airline">
+				<Annotation Term="Capabilities.DeleteRestrictions">
+					<Record Type="Capabilities.DeleteRestrictionsType">
+						<PropertyValue Property="Deletable" Bool="false"/>
+					</Record>
+				</Annotation>
+				<Annotation Term="Capabilities.InsertRestrictions">
+					<Record Type="Capabilities.InsertRestrictionsType">
+						<PropertyValue Property="Insertable" Bool="false"/>
+					</Record>
+				</Annotation>
+				<Annotation Term="Capabilities.UpdateRestrictions">
+					<Record Type="Capabilities.UpdateRestrictionsType">
+						<PropertyValue Property="Updatable" Bool="false"/>
+					</Record>
+				</Annotation>
+			</Annotations>
+			<Annotations Target="AppService.Airline/Name">
+				<Annotation Term="Common.Label" Path="Airline"/>
+			</Annotations>
+			<Annotations Target="AppService.Airline/Country">
+				<Annotation Term="Common.Label" Path="Country"/>
+			</Annotations>
+			<Annotations Target="AppService.EntityContainer/Airports">
+				<Annotation Term="Capabilities.DeleteRestrictions">
+					<Record Type="Capabilities.DeleteRestrictionsType">
+						<PropertyValue Property="Deletable" Bool="false"/>
+					</Record>
+				</Annotation>
+				<Annotation Term="Capabilities.InsertRestrictions">
+					<Record Type="Capabilities.InsertRestrictionsType">
+						<PropertyValue Property="Insertable" Bool="false"/>
+					</Record>
+				</Annotation>
+				<Annotation Term="Capabilities.UpdateRestrictions">
+					<Record Type="Capabilities.UpdateRestrictionsType">
+						<PropertyValue Property="Updatable" Bool="false"/>
+					</Record>
+				</Annotation>
+			</Annotations>
+			<Annotations Target="AppService.Airports/Name">
+				<Annotation Term="Common.Label" Path="Airport"/>
+			</Annotations>
+			<Annotations Target="AppService.Airports/City">
+				<Annotation Term="Common.Label" Path="City"/>
+			</Annotations>
+			<Annotations Target="AppService.Airports/Country">
+				<Annotation Term="Common.Label" Path="Country"/>
+			</Annotations>
+			<Annotations Target="AppService.EntityContainer/FlightRoutes">
+				<Annotation Term="Capabilities.DeleteRestrictions">
+					<Record Type="Capabilities.DeleteRestrictionsType">
+						<PropertyValue Property="Deletable" Bool="false"/>
+					</Record>
+				</Annotation>
+				<Annotation Term="Capabilities.InsertRestrictions">
+					<Record Type="Capabilities.InsertRestrictionsType">
+						<PropertyValue Property="Insertable" Bool="false"/>
+					</Record>
+				</Annotation>
+				<Annotation Term="Capabilities.UpdateRestrictions">
+					<Record Type="Capabilities.UpdateRestrictionsType">
+						<PropertyValue Property="Updatable" Bool="false"/>
+					</Record>
+				</Annotation>
+			</Annotations>
+		</Schema>
+	</edmx:DataServices>
+</edmx:Edmx>
