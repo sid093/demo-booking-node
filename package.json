@@ -1,0 +1,21 @@
+{
+  "name": "booking-app-node",
+  "version": "1.0.0",
+  "dependencies": {
+    "@sap/cds": "^3.5",
+    "booking-app-model" : "git://github.com/sid093/demo-booking-hana.git"
+  },
+  "scripts": {
+    "start": "cds run",
+    "build": "cds build/all --clean",
+    "watch": "nodemon -w . -i node_modules/**,.git/** -e cds -x npm run build"
+  },
+  "cds": {
+    "requires": {
+      "db": {
+        "kind": "hana",
+        "model": [ "db", "srv" ]
+      }
+    }
+  }
+}
