@@ -1,4 +1,4 @@
 {
-    "name":    "demo-booking-node.db",
-    "subfolder": "append"
+    "name":    "",
+    "subfolder": "ignore"
 }
