@@ -10,6 +10,7 @@
 		"localDir": "webapp"
 	}, {
 		"source": "^/booking/(.*)$",
+		"target": "$1",
 		"destination": "booking"
 	}]
 }

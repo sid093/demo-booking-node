@@ -6,8 +6,17 @@
 		</semantic:titleHeading>
 		<semantic:headerContent>
 			<ObjectNumber number="{ path: 'Cost', formatter: '.formatter.numberUnit' }" unit="USD"/>
-			<ObjectNumber number="{NumberOfPassengers} Passengers"/>
+			<ObjectNumber number="{NumberOfPassengers}" unit="Passengers"/>
 		</semantic:headerContent>
+		<semantic:content>
+			<VBox>
+				<ObjectAttribute title="Customer Name" text="{CustomerName}"></ObjectAttribute>
+				<ObjectAttribute title="Email Address" text="{EmailAddress}"></ObjectAttribute>
+				<ObjectAttribute title="Airline Carrier" text="{Route>Airline_IATA}"></ObjectAttribute>
+				<ObjectAttribute title="Destination Airport" text="{Route>DestinationAirport_IATA3}"></ObjectAttribute>
+				<ObjectAttribute title="Arrival Airport" text="{Route}"></ObjectAttribute>
+			</VBox>
+		</semantic:content>
 		<semantic:sendEmailAction>
 			<semantic:SendEmailAction id="shareEmail" press=".onShareEmailPress"/>
 		</semantic:sendEmailAction>

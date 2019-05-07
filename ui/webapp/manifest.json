@@ -73,8 +73,7 @@
 				"settings": {
 					"operationMode": "Server",
 					"groupId": "$auto",
-					"synchronizationMode": "None",
-					"autoExpandSelect": true
+					"synchronizationMode": "None"
 				}
 			}
 		},

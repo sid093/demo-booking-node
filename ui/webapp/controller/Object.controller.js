@@ -6,6 +6,7 @@ sap.ui.define([
 ], function (BaseController, JSONModel, History, formatter) {
 	"use strict";
 
+var oControl;
 	return BaseController.extend("demo.booking.ui.controller.Object", {
 
 		formatter: formatter,
@@ -19,6 +20,7 @@ sap.ui.define([
 		 * @public
 		 */
 		onInit : function () {
+			oControl=this;
 			// Model used to manipulate control states. The chosen values make sure,
 			// detail page shows busy indication immediately so there is no break in
 			// between the busy indication for loading the view's meta data
@@ -76,6 +78,7 @@ sap.ui.define([
 
 			this.getView().bindElement({
 				path: sObjectPath,
+				parameters: { "$expand": "Route" },
 				events: {
 					change: this._onBindingChange.bind(this),
 					dataRequested: function () {
