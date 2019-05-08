@@ -1,0 +1,11 @@
+#
+#Wed May 08 03:17:30 UTC 2019
+Type=HTTP
+TrustAll=true
+Authentication=NoAuthentication
+WebIDEUsage=proj_serv
+Name=booking
+WebIDEEnabled=true
+ProxyType=Internet
+URL=https\://i319971trial-trial-dev-srv.cfapps.eu10.hana.ondemand.com
+WebIDESystem=CF
