@@ -12,5 +12,9 @@
 		"source": "^/booking/(.*)$",
 		"target": "$1",
 		"destination": "booking"
+	}, {
+		"source": "^/purchaseorder/(.*)$",
+		"target": "$1",
+		"destination": "purchaseorder"
 	}]
 }

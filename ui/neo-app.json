@@ -39,6 +39,13 @@
 			"name": "booking"
 		},
 		"description": "NodeJs Odata Service"
+	}, {
+		"path": "/purchaseorder",
+		"target": {
+			"type": "destination",
+			"name": "purchaseorder"
+		},
+		"description": "NodeJs Odata Service"
 	}],
 	"sendWelcomeFileRedirect": true
 }
