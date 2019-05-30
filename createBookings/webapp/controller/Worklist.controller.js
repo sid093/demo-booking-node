@@ -3,8 +3,9 @@ sap.ui.define([
 	"sap/ui/model/json/JSONModel",
 	"../model/formatter",
 	"sap/ui/model/Filter",
-	"sap/ui/model/FilterOperator"
-], function (BaseController, JSONModel, formatter, Filter, FilterOperator) {
+	"sap/ui/model/FilterOperator",
+	"sap/m/MessageToast"
+], function (BaseController, JSONModel, formatter, Filter, FilterOperator,MessageToast) {
 	"use strict";
 
 	return BaseController.extend("com.createbookings.createBookings.controller.Worklist", {
@@ -156,6 +157,7 @@ sap.ui.define([
 		
 		onBookMe:function(oEvent)
 		{
+			var that=this;
 			var formValues=this.getView().byId("FormChange354").getFormContainers()[0];
 			var filledValues=[];
 			var bookingNo=Math.floor(Math.random() * 20);
@@ -185,7 +187,7 @@ sap.ui.define([
 			
 		var bookingValues = {
 
-				"BookingNo": bookingNo+filledValues[3],
+				"BookingNo": Math.random().toString(36).substring(2, 6) + Math.random().toString(36).substring(2, 6),
 				"NumberOfPassengers": parseInt(filledValues[2]),
 				"CustomerName": filledValues[3],
 				"DateOfTravel": filledValues[4],
@@ -198,8 +200,12 @@ sap.ui.define([
 
 
 oModel.created().then(function () {
-                    var shobhit;// sales order successfully created
+                    	MessageToast.show("Your journey has been booked");
+                    	that.onCancel();
                 }, function (oError) {
+                		MessageToast.show("Sorry, We cant process this request at this point of time.");
+                	that.onCancel();
+                	
                     var shobhit;// handle rejection of entity creation; if oError.canceled === true then the transient entity has been deleted 
                 });  	
 	

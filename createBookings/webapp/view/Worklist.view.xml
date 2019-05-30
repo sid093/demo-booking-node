@@ -10,7 +10,7 @@
 		toggleHeaderOnTitleClick="false">
 
 		<semantic:titleHeading>
-			<Title text="{i18n>worklistTitle}" />
+			<Title text="{i18n>worklistTitle}"  textAlign="Center"  />
 		</semantic:titleHeading>
 
 		<semantic:content>
@@ -21,7 +21,7 @@
 					path: '/Bookings',
 					sorter: {
 						path: 'CustomerName',
-						descending: false
+						descending: true
 					}
 				}"
 				noDataText="{worklistView>/tableNoDataText}"
@@ -31,9 +31,9 @@
 
 				<headerToolbar>
 					<Toolbar>
-						<Title id="tableHeader" text="{worklistView>/worklistTableTitle}"/>
+						<Title id="tableHeader" text="{i18n>bookings}"/>
 						<ToolbarSpacer />
-						<Button type="Accept" text="Create New Booking" press="createNew" />
+						<Button type="Emphasized"     text="Create New Booking" press="createNew" />
 						<SearchField
 							id="searchField"
 							tooltip="{i18n>worklistSearchTooltip}"
@@ -45,35 +45,54 @@
 
 				<columns>
 					<Column id="nameColumn">
-						<Text text="{i18n>tableNameColumnTitle}" id="nameColumnTitle"/>
+						<Text text="{i18n>name}" id="nameColumnTitle"/>
 					</Column>
-					<Column id="unitNumberColumn" hAlign="End">
-						<Text text="{i18n>tableUnitNumberColumnTitle}" id="unitNumberColumnTitle"/>
+						<Column id="dateColumn">
+						<Text text="{i18n>date}" id="dateColumnTitle"/>
 					</Column>
+					<Column id="unitNumberColumn" >
+						<Text text="{i18n>noOfpass}" id="unitNumberColumnTitle"/>
+					</Column>
+					
+						<Column id="bookingNumberColumn">
+						<Text text="{i18n>bookno}" id="bookingNumberColumnTitle"/>
+					</Column>
+					
+				
+				<Column id="costColumn">
+						<Text text="{i18n>cost}" id="costColumnTitle"/>
+					</Column>
+					
 				</columns>
 
 				<items>
 					<ColumnListItem
-						type="Navigation"
+						type="Inactive"
 						press=".onPress">
 						<cells>
 							<ObjectIdentifier
 								title="{CustomerName}"/>
-							<ObjectNumber
-								number="{
-									path: 'NumberOfPassengers',
-									formatter: '.formatter.numberUnit'
-								}"
-								unit="{Cost}"/>
+								<ObjectIdentifier
+								title="{DateOfTravel}"/>
+									<ObjectIdentifier
+								title="{NumberOfPassengers}"/>
+								<ObjectIdentifier
+								title="{BookingNo}"/>
+								<ObjectIdentifier
+								title="{Cost}"/>
+							<!--<ObjectNumber-->
+							<!--	number="{-->
+							<!--		path: 'NumberOfPassengers',-->
+							<!--		formatter: '.formatter.numberUnit'-->
+							<!--	}"-->
+							<!--	unit="{Cost}"/>-->
 						</cells>
 					</ColumnListItem>
 				</items>
 			</Table>
 		</semantic:content>
 
-		<semantic:sendEmailAction>
-			<semantic:SendEmailAction id="shareEmail" press=".onShareEmailPress"/>
-		</semantic:sendEmailAction>
+	
 			
 
 
