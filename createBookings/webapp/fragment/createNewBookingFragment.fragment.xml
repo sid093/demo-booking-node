@@ -1,0 +1,110 @@
+<core:FragmentDefinition xmlns="sap.m" xmlns:l="sap.ui.layout"
+	xmlns:f="sap.ui.layout.form"
+	xmlns:core="sap.ui.core">
+	<Dialog id="createBookingsFragment" contentWidth="90%" title="{i18n>CreateNewBooking}" type="Standard"  draggable="true" busy="{dashboardModel>/dialogBusy}" busyIndicatorDelay="0">
+	
+	
+		
+		
+		
+			<VBox class="sapUiSmallMargin">
+		<f:Form id="FormChange354"
+			editable="true">
+			<f:title>
+				<core:Title text="Enter Details for your bookings" />
+			</f:title>
+			<f:layout>
+				<f:ResponsiveGridLayout
+					labelSpanXL="3"
+					labelSpanL="3"
+					labelSpanM="3"
+					labelSpanS="12"
+					adjustLabelSpan="false"
+					emptySpanXL="4"
+					emptySpanL="4"
+					emptySpanM="4"
+					emptySpanS="0"
+					columnsXL="1"
+					columnsL="1"
+					columnsM="1"
+					singleContainerFullSize="false" />
+			</f:layout>
+			<f:formContainers>
+				<f:FormContainer>
+					<f:formElements>
+						<f:FormElement label="Origin">
+							<f:fields>
+								<Select id="country" selectedKey="">
+									<items>
+										<core:Item text="England" key="England"/>
+										<core:Item text="Germany" key="Germany"/>
+										<core:Item text="USA" key="USA"/>
+									</items>
+								</Select>
+							</f:fields>
+						</f:FormElement>
+						
+							<f:FormElement label="Destination">
+							<f:fields>
+								<Select id="planet" selectedKey="">
+									<items>
+										<core:Item text="Mercury" key="Mercury"/>
+										<core:Item text="Venus" key="Mercury"/>
+										<core:Item text="Pluto" key="Mercury"/>
+									</items>
+								</Select>
+							</f:fields>
+						</f:FormElement>
+						
+						
+						<f:FormElement label="Number of Passengers">
+							<f:fields>
+								<Input value="" />
+								
+							</f:fields>
+						</f:FormElement>
+						<f:FormElement label="Name of Customer">
+							<f:fields>
+								<Input value=""/>
+									
+							</f:fields>
+						</f:FormElement>
+						
+						<f:FormElement label="Date of Journey">
+							<f:fields>
+							<DatePicker
+			id="DP8"
+			placeholder="Enter Date ..."
+			change="handleChange"
+			class="sapUiSmallMarginBottom"/>
+								
+							</f:fields>
+						</f:FormElement>
+						
+						
+						<!--<f:FormElement label="Country">-->
+						<!--	<f:fields>-->
+						<!--		<Select id="country" selectedKey="{Country}">-->
+						<!--			<items>-->
+						<!--				<core:Item text="England" key="England"/>-->
+						<!--				<core:Item text="Germany" key="Germany"/>-->
+						<!--				<core:Item text="USA" key="USA"/>-->
+						<!--			</items>-->
+						<!--		</Select>-->
+						<!--	</f:fields>-->
+						<!--</f:FormElement>-->
+					</f:formElements>
+				</f:FormContainer>
+			</f:formContainers>
+		</f:Form>
+	</VBox>
+		<beginButton>
+		<Button text="{i18n>BOOKME}" type="Accept" tooltip="{i18n>BOOKME}" press="onBookMe"/>
+		
+		</beginButton>
+		<endButton>
+				
+					<Button text="{i18n>BTN_CLOSE}" type="Reject" tooltip="{i18n>BTN_CLOSE}" press="onCancel"/>
+		</endButton>
+	</Dialog>
+</core:FragmentDefinition>

@@ -36,6 +36,25 @@ modules:
           url: '~{url}'
           forwardAuthToken: true
       - name: connectivity
+
+  
+
+
+  - name: createBookings
+    type: html5
+    path: createBookings
+    parameters:
+       disk-quota: 256M
+       memory: 256M
+    build-parameters:
+       builder: grunt
+    requires:
+     - name: uaa_demo-booking-node
+     - name: dest_demo-booking-node
+     
+       
+     
+
 resources:
   - name: hdi_db
     properties:
