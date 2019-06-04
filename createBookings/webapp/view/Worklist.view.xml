@@ -63,6 +63,10 @@
 						<Text text="{i18n>cost}" id="costColumnTitle"/>
 					</Column>
 					
+					<Column id="linkColumn">
+						<Text text="{i18n>LinkToMongoPOEntry}" id="costColumnTitleLink"/>
+					</Column>
+					
 				</columns>
 
 				<items>
@@ -80,6 +84,9 @@
 								title="{BookingNo}"/>
 								<ObjectIdentifier
 								title="{Cost}"/>
+									<Link
+				text="Mongo PO Link"
+				press="handleLinkPress" />
 							<!--<ObjectNumber-->
 							<!--	number="{-->
 							<!--		path: 'NumberOfPassengers',-->

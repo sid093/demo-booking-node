@@ -51,6 +51,7 @@ modules:
     requires:
      - name: uaa_demo-booking-node
      - name: dest_demo-booking-node
+     - name: connectivity
      
        
      

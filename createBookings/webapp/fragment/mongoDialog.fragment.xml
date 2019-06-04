@@ -1,0 +1,41 @@
+<core:FragmentDefinition
+	xmlns="sap.m"
+	xmlns:l="sap.ui.layout"
+	xmlns:f="sap.ui.layout.form"
+	xmlns:core="sap.ui.core">
+	
+	<Dialog id="showDetailsMongo" contentWidth="50%" title="{i18n>Details}" type="Standard"  draggable="true" busy="{dashboardModel>/dialogBusy}" busyIndicatorDelay="0">	
+	<VBox class="sapUiSmallMargin">
+		<f:SimpleForm id="SimpleFormDisplay3546"
+			editable="false"
+			layout="ResponsiveGridLayout"
+			labelSpanXL="3"
+			labelSpanL="3"
+			labelSpanM="3"
+			labelSpanS="12"
+			adjustLabelSpan="false"
+			emptySpanXL="4"
+			emptySpanL="4"
+			emptySpanM="4"
+			emptySpanS="0"
+			columnsXL="1"
+			columnsL="1"
+			columnsM="1"
+			singleContainerFullSize="false" >
+			<f:content>
+				<Label text="Name Of customer" />
+				<Text id="nameText" text="{mongoJson>/customerName}" />
+				<Label text="Booking Reference" />
+				<Text text="{mongoJson>/bookingref}" />
+				<Label text="Po Number" />
+				<Text text="{mongoJson>/Ponnumber}" />
+				</f:content>
+		</f:SimpleForm>
+	</VBox>
+	
+	<endButton>
+				
+					<Button text="{i18n>BTN_CLOSE1}" type="Reject" tooltip="{i18n>BTN_CLOSE}" press="onCancelMongo"/>
+		</endButton>
+		</Dialog>
+</core:FragmentDefinition>

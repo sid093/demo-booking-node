@@ -12,6 +12,16 @@
       "destination": "destinationForUI5",
       "csrfProtection": false
     },
+    
+    
+    
+    {
+      "source": "^/destinationForUI5_MONGO/(.*)$",
+      "target": "$1",
+      "authenticationType": "none",
+      "destination": "destinationForUI5_MONGO",
+      "csrfProtection": false
+    },
     {
       "source": "^/createBookings/(.*)$",
       "target": "$1",

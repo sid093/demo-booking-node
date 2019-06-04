@@ -5,6 +5,8 @@ sap.ui.define([
 	"sap/ui/model/Filter",
 	"sap/ui/model/FilterOperator",
 	"sap/m/MessageToast"
+		
+		
 ], function (BaseController, JSONModel, formatter, Filter, FilterOperator,MessageToast) {
 	"use strict";
 
@@ -35,6 +37,17 @@ sap.ui.define([
 				tableNoDataText : this.getResourceBundle().getText("tableNoDataText")
 			});
 			this.setModel(oViewModel, "worklistView");
+			
+			
+				var mongoJson = new JSONModel({
+					"customerName": "",
+						"bookingref": "",
+						"Ponnumber": ""
+				
+				
+
+			});
+			this.getView().setModel(mongoJson, "mongoJson");
 
 		},
 
@@ -155,13 +168,115 @@ sap.ui.define([
 			this._oDialog.close();
 		},
 		
+		onCancelMongo:function()
+		{
+			this._oDialog1.close();
+		},
+		
+		
+		openMongoDialog:function()
+		{
+			if (!this._oDialog1) {
+				
+				this._oDialog1 = sap.ui.xmlfragment(this.getView().getId(), "com.createbookings.createBookings.fragment.mongoDialog", this);
+			}
+			this._oDialog1.setModel(this.getView().getModel());
+			this._oDialog1.setModel(this.getView().getModel('i18n'), 'i18n');
+			this.getView().addDependent(this._oDialog1);
+			// toggle compact style
+			jQuery.sap.syncStyleClass("sapUiSizeCompact", this.getView(), this._oDialog1);
+			this._oDialog1.open();
+		},
+		
+		
+	setValueinMongoModel:function(dataString)
+	
+	{
+		
+		if(dataString==="")
+		{
+			this.getView().getModel("mongoJson").setProperty("/customerName","");
+           this.getView().getModel("mongoJson").setProperty("/bookingref","");
+           this.getView().getModel("mongoJson").setProperty("/Ponnumber","");
+		}
+		
+		else
+		{
+			this.getView().getModel("mongoJson").setProperty("/customerName",dataString[0].cusomterid);
+           this.getView().getModel("mongoJson").setProperty("/bookingref",dataString[0].bookingref);
+           this.getView().getModel("mongoJson").setProperty("/Ponnumber",dataString[0].ponumber);
+		}
+		
+		
+	},
+	
+			
+		
+		
+	handleLinkPress:function(oEvent)
+	{
+		var that=this;
+		var bookingId=oEvent.getSource().getBindingContext().getObject().BookingNo;
+		var url="/destinationForUI5_MONGO/po/"+bookingId;
+		
+			$.ajax({  
+        type: "GET",  
+        url: url,  
+        success: function(dataString) { 
+        	
+        	var emptyModel="";
+        	that.setValueinMongoModel(emptyModel);
+        	that.setValueinMongoModel(dataString);
+           that.openMongoDialog();
+           
+        }  ,
+        error: function (response) {
+        	
+        	var emptyModel="";
+        	that.setValueinMongoModel(emptyModel);
+
+					}
+        
+    });  
+	},
+		
+		
+		
+		callMongoDB:function(bookingValues)
+		{
+			
+			
+			var url = "/destinationForUI5_MONGO/po/create";
+			
+	var payLoad={
+	"bookingref": bookingValues.BookingNo,
+	"cusomterid":bookingValues.CustomerName
+	
+} ;
+			
+			$.ajax({  
+        type: "POST",  
+        url: url,  
+        data: payLoad,  
+        success: function(dataString) {  
+             //MessageToast.show("Recorder Created in Mongo");
+        }  ,
+        error: function (response) {
+						 MessageToast.show("Mongo entry insertion failed");
+
+					}
+        
+    });  
+			
+		},
+		
 		onBookMe:function(oEvent)
 		{
 			var that=this;
 			var formValues=this.getView().byId("FormChange354").getFormContainers()[0];
 			var filledValues=[];
-			var bookingNo=Math.floor(Math.random() * 20);
-			bookingNo=bookingNo.toString();
+			// var bookingNo=Math.floor(Math.random() * 20);
+			// bookingNo=bookingNo.toString();
 			for(var i=0; i<5; i++)
 			{
 				if( i===0 ||  i===1)
@@ -202,11 +317,12 @@ sap.ui.define([
 oModel.created().then(function () {
                     	MessageToast.show("Your journey has been booked");
                     	that.onCancel();
+                    	that.callMongoDB(bookingValues);
                 }, function (oError) {
                 		MessageToast.show("Sorry, We cant process this request at this point of time.");
                 	that.onCancel();
                 	
-                    var shobhit;// handle rejection of entity creation; if oError.canceled === true then the transient entity has been deleted 
+                    // handle rejection of entity creation; if oError.canceled === true then the transient entity has been deleted 
                 });  	
 	
 			

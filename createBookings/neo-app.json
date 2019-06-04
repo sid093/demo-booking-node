@@ -10,6 +10,14 @@
       "description": "ui5destination"
     },
     {
+      "path": "/destinationForUI5_MONGO",
+      "target": {
+        "type": "destination",
+        "name": "destinationForUI5_MONGO"
+      },
+      "description": "destinationForUI5_MONGO"
+    },
+    {
       "path": "/webapp/resources",
       "target": {
         "type": "service",
